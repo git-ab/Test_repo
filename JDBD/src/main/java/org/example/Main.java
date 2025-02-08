@@ -1,6 +1,7 @@
 package org.example;
 
 import java.sql.*;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -16,8 +17,8 @@ public class Main {
         dbhandler.updateQuery(DbHandler.UPDATE1);
         dbhandler.createPreparedStatement();
         dbhandler.deletedRecord();
-        dbhandler.deleteTable();
-//        dbhandler.updateSS();
+//        dbhandler.deleteTable();
+        dbhandler.updateSS();
     }
 }
 
@@ -117,12 +118,12 @@ class DbHandler {
             int updatedRows = stmt.executeUpdate("DELETE FROM AB WHERE ID >71");
             System.out.println("Usunieto rekordy o ID > 71");
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    void deleteTable(){
+    void deleteTable() {
         try {
             Boolean delete = stmt.execute("DROP TABLE AB");
             System.out.println("Usunieto tabele");
@@ -131,11 +132,15 @@ class DbHandler {
         }
     }
 
-    void updateSS(){
+    void updateSS() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Podaj query: ");
         String query = sc.nextLine();
 
-        int nn =stmt.executeUpdate(query)
+        try {
+            int nn = stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
